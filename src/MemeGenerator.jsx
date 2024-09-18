@@ -67,7 +67,7 @@ export default function MemeGenerator() {
         <div>
           <h2>Your Meme:</h2>
           <img
-            htmlFor='data-test-id="meme-image"'
+            className='data-test-id="meme-image"'
             src={memeUrl}
             alt="Generated Meme"
           />
