@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function MemeGenerator() {
-  const [template, setTemplate] = useState('');
+  const [template, setTemplate] = useState('buzz');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
   const [memeUrl, setMemeUrl] = useState('');
+
+  // Set a default meme image when the component loads
+  useEffect(() => {
+    const defaultMemeUrl = `https://memegen.link/${template}/Top/Bottom.jpg`;
+    setMemeUrl(defaultMemeUrl);
+  }, [template]);
 
   const generateMeme = () => {
     // Use encodeURIComponent to handle special characters safely in URLs
