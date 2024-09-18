@@ -66,11 +66,7 @@ export default function MemeGenerator() {
       {memeUrl && (
         <div>
           <h2>Your Meme:</h2>
-          <img
-            className='data-test-id="meme-image"'
-            src={memeUrl}
-            alt="Generated Meme"
-          />
+          <img data-test-id="meme-image" src={memeUrl} alt="Generated Meme" />
           <div>
             <button onClick={download}>Download</button>
           </div>
