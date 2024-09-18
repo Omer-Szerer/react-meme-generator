@@ -7,18 +7,34 @@ export default function MemeGenerator() {
   const [bottomText, setBottomText] = useState(''); // Set bottom text
   const [memeUrl, setMemeUrl] = useState(''); // Set the meme url
 
-  // A function to generate the meme URL based on the current meme template, top text, and bottom text
   const updateMemeUrl = (template, topText, bottomText) => {
-    const formattedTopText = topText ? encodeURIComponent(topText) : '_'; // Encodes the text and allow to use special characters
-    const formattedBottomText = bottomText
-      ? encodeURIComponent(bottomText)
-      : '_';
+    if (!template) {
+      return ''; // Handle case where template is empty
+    }
 
-    return `https://memegen.link/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
+    // Encode the text and replace spaces with underscores
+    const formatText = (text) => {
+      return encodeURIComponent(text).replace(/%20/g, '_'); // Encode and replace spaces with underscores
+    };
+
+    const formattedTopText = topText ? formatText(topText) : '_';
+    const formattedBottomText = bottomText ? formatText(bottomText) : '_';
+
+    return `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`;
   };
+  // // A function to generate the meme URL based on the current meme template, top text, and bottom text
+  // const updateMemeUrl = (template, topText, bottomText) => {
+  //   const formattedTopText = topText ? encodeURIComponent(topText) : '_'; // Encodes the text and allow to use special characters
+  //   const formattedBottomText = bottomText
+  //     ? encodeURIComponent(bottomText)
+  //     : '_';
+
+  //   return `https://memegen.link/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
+  // };
 
   useEffect(() => {
     const url = updateMemeUrl(template, topText, bottomText); // Updates the meme URL based on the user input
+    console.log('Generated Meme URL:', url);
     setMemeUrl(url);
   }, [template, topText, bottomText]); // Dependency array: whenever the variables change they trigger the useEffect
 
