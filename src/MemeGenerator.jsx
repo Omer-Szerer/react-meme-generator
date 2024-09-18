@@ -59,7 +59,7 @@ export default function MemeGenerator() {
       </div>
       <div>
         <label>
-          Bottom Text:
+          Bottom text:
           <input
             value={bottomText}
             onChange={(event) => setBottomText(event.currentTarget.value)}
