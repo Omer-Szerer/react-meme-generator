@@ -7,30 +7,17 @@ export default function MemeGenerator() {
   const [bottomText, setBottomText] = useState(''); // Set bottom text
   const [memeUrl, setMemeUrl] = useState(''); // Set the meme url
 
+  // A function to generate the meme URL based on the current meme template, top text, and bottom text
   const updateMemeUrl = (template, topText, bottomText) => {
-    if (!template) {
-      return ''; // Handle case where template is empty
-    }
-
-    // Encode the text and replace spaces with underscores
     const formatText = (text) => {
-      return encodeURIComponent(text).replace(/%20/g, '_'); // Encode and replace spaces with underscores
+      return encodeURIComponent(text).replace(/%20/g, '_'); // Replace spaces with underscores
     };
 
-    const formattedTopText = topText ? formatText(topText) : '_';
+    const formattedTopText = topText ? formatText(topText) : '_'; // Encodes the text and allow to use special characters
     const formattedBottomText = bottomText ? formatText(bottomText) : '_';
 
-    return `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`;
+    return `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
   };
-  // // A function to generate the meme URL based on the current meme template, top text, and bottom text
-  // const updateMemeUrl = (template, topText, bottomText) => {
-  //   const formattedTopText = topText ? encodeURIComponent(topText) : '_'; // Encodes the text and allow to use special characters
-  //   const formattedBottomText = bottomText
-  //     ? encodeURIComponent(bottomText)
-  //     : '_';
-
-  //   return `https://memegen.link/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
-  // };
 
   useEffect(() => {
     const url = updateMemeUrl(template, topText, bottomText); // Updates the meme URL based on the user input
@@ -41,6 +28,13 @@ export default function MemeGenerator() {
   const generateMeme = () => {
     // When the button is clicked, update the template state with the value of liveTemplate
     setTemplate(liveTemplate);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent default form submission if within a form
+      generateMeme(); // Call generateMeme when Enter is pressed
+    }
   };
 
   const download = () => {
@@ -59,6 +53,7 @@ export default function MemeGenerator() {
           <input
             value={liveTemplate}
             onChange={(event) => setLiveTemplate(event.currentTarget.value)}
+            onKeyDown={handleKeyDown}
             placeholder="e.g., 'doge'"
           />
         </label>
