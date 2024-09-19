@@ -21,15 +21,9 @@ export default function MemeGenerator() {
     setMemeUrl(url);
   }, [template, topText, bottomText]); // Dependency array: useEffect will re-run whenever one of the variables changes
 
-  const generateMeme = () => {
-    // When the button is clicked, update the template state with the value of liveTemplate
+  const generateMeme = (event) => {
+    event.preventDefault(); // Prevent form submission (and thus page refresh)
     setTemplate(liveTemplate);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event === 'Enter') {
-      generateMeme(); // Call generateMeme when Enter is pressed
-    }
   };
 
   const downloadImage = () => {
@@ -38,49 +32,50 @@ export default function MemeGenerator() {
 
   return (
     <div>
-      <h1>Meme Generator</h1>
-      <div>
-        <label>
-          Meme template:
-          <input
-            value={liveTemplate}
-            onChange={(event) => setLiveTemplate(event.currentTarget.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="e.g., 'doge'"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Top text:
-          <input
-            value={topText}
-            onChange={(event) => setTopText(event.currentTarget.value)}
-            placeholder="Top text"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Bottom text:
-          <input
-            value={bottomText}
-            onChange={(event) => setBottomText(event.currentTarget.value)}
-            placeholder="Bottom text"
-          />
-        </label>
-      </div>
-
-      <button onClick={generateMeme}>Generate Meme</button>
-
-      {memeUrl && (
+      <form onSubmit={generateMeme}>
+        <h1>Meme Generator</h1>
         <div>
-          <img data-test-id="meme-image" src={memeUrl} alt="Generated Meme" />
-          <div>
-            <button onClick={downloadImage}>Download</button>
-          </div>
+          <label>
+            Meme template:
+            <input
+              value={liveTemplate}
+              onChange={(event) => setLiveTemplate(event.currentTarget.value)}
+              placeholder="e.g., 'doge'"
+            />
+          </label>
         </div>
-      )}
+        <div>
+          <label>
+            Top text:
+            <input
+              value={topText}
+              onChange={(event) => setTopText(event.currentTarget.value)}
+              placeholder="Top text"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Bottom text:
+            <input
+              value={bottomText}
+              onChange={(event) => setBottomText(event.currentTarget.value)}
+              placeholder="Bottom text"
+            />
+          </label>
+        </div>
+
+        <button>Generate Meme</button>
+
+        {memeUrl && (
+          <div>
+            <img data-test-id="meme-image" src={memeUrl} alt="Generated Meme" />
+            <div>
+              <button onClick={downloadImage}>Download</button>
+            </div>
+          </div>
+        )}
+      </form>
     </div>
   );
 }
