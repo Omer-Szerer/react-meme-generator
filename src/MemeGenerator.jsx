@@ -10,7 +10,7 @@ export default function MemeGenerator() {
 
   useEffect(() => {
     const formatText = (string) => {
-      // Encode special characters in the string to be used safely in a URL + replace space(%20) to underscores _
+      // Encode special characters in the string to be used safely in a URL + replace spaces(%20) to underscores _
       return encodeURIComponent(string).replace(/%20/g, '_');
     };
 
@@ -26,12 +26,13 @@ export default function MemeGenerator() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <h1>Meme Generator</h1>
-      <div>
+      <div className="inputs">
         <label>
           Meme template:
           <input
+            className="template-name"
             value={liveTemplate}
             onChange={(event) => {
               setLiveTemplate(event.currentTarget.value); // Update liveTemplate as user types
@@ -40,9 +41,7 @@ export default function MemeGenerator() {
             placeholder="e.g., 'doge'"
           />
         </label>
-      </div>
-      <div>
-        <label>
+        <label className="top-text">
           Top text:
           <input
             value={topText}
@@ -50,9 +49,7 @@ export default function MemeGenerator() {
             placeholder="Top text"
           />
         </label>
-      </div>
-      <div>
-        <label>
+        <label className="bottom-text">
           Bottom text:
           <input
             value={bottomText}
@@ -65,11 +62,11 @@ export default function MemeGenerator() {
       {memeUrl && (
         <div>
           <img data-test-id="meme-image" src={memeUrl} alt="Generated Meme" />
-          <div>
-            <button onClick={downloadImage}>Download</button>
-          </div>
         </div>
       )}
+      <div>
+        <button onClick={downloadImage}>Download</button>
+      </div>
     </div>
   );
 }
