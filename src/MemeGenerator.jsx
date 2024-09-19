@@ -1,3 +1,4 @@
+import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 
 export default function MemeGenerator() {
@@ -10,10 +11,11 @@ export default function MemeGenerator() {
   // A function to generate the meme URL based on the current meme template, top text, and bottom text
   const updateMemeUrl = (template, topText, bottomText) => {
     const formatText = (text) => {
-      return encodeURIComponent(text).replace(/%20/g, '_'); // Replace spaces with underscores
+      return encodeURIComponent(text).replace(/%20/g, '_'); // Encodes the text and allow to use special characters
+      // replace spaces with underscores
     };
 
-    const formattedTopText = topText ? formatText(topText) : '_'; // Encodes the text and allow to use special characters
+    const formattedTopText = topText ? formatText(topText) : '_';
     const formattedBottomText = bottomText ? formatText(bottomText) : '_';
 
     return `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
@@ -21,7 +23,6 @@ export default function MemeGenerator() {
 
   useEffect(() => {
     const url = updateMemeUrl(template, topText, bottomText); // Updates the meme URL based on the user input
-    console.log('Generated Meme URL:', url);
     setMemeUrl(url);
   }, [template, topText, bottomText]); // Dependency array: whenever the variables change they trigger the useEffect
 
@@ -37,11 +38,15 @@ export default function MemeGenerator() {
     }
   };
 
-  const download = () => {
-    const link = document.createElement('a');
-    link.href = memeUrl;
-    link.download = 'meme.jpg';
-    link.click();
+  // const download = () => {
+  //   const link = document.createElement('a');
+  //   link.href = memeUrl;
+  //   link.download = 'meme.jpg';
+  //   link.click();
+  // };
+
+  const downloadImage = () => {
+    saveAs('updateMemeUrl', 'image.jpg');
   };
 
   return (
@@ -85,7 +90,7 @@ export default function MemeGenerator() {
         <div>
           <img data-test-id="meme-image" src={memeUrl} alt="Generated Meme" />
           <div>
-            <button onClick={download}>Download</button>
+            <button onClick={downloadImage}>Download</button>
           </div>
         </div>
       )}
