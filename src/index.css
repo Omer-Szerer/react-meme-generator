@@ -4,7 +4,8 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 4rem;
+  font-family: 'Protest Guerrilla', sans-serif;
 }
 
 .main-container {
@@ -16,13 +17,9 @@ h1 {
 .inputs {
   display: flex;
   flex-direction: row;
-  align-items: last baseline;
-  font-weight: bold;
-  margin-right: 25px;
-}
-
-.top-text {
-  margin: 15px;
+  justify-content: space-between;
+  font-weight: 500;
+  width: 600px;
 }
 
 button {
@@ -41,10 +38,6 @@ button:hover {
 
 button:active {
   background-color: hsl(208, 100%, 65%);
-}
-
-label {
-  margin: 10px;
 }
 
 input {
