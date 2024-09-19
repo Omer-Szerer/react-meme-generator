@@ -38,15 +38,8 @@ export default function MemeGenerator() {
     }
   };
 
-  // const download = () => {
-  //   const link = document.createElement('a');
-  //   link.href = memeUrl;
-  //   link.download = 'meme.jpg';
-  //   link.click();
-  // };
-
   const downloadImage = () => {
-    saveAs('updateMemeUrl', 'image.jpg');
+    saveAs(memeUrl, 'image.jpg');
   };
 
   return (
