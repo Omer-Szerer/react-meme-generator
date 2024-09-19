@@ -8,23 +8,18 @@ export default function MemeGenerator() {
   const [bottomText, setBottomText] = useState(''); // Set bottom text
   const [memeUrl, setMemeUrl] = useState(''); // Set the meme url
 
-  // A function to generate the meme URL based on the current meme template, top text, and bottom text
-  const updateMemeUrl = (template, topText, bottomText) => {
-    const formatText = (text) => {
-      return encodeURIComponent(text).replace(/%20/g, '_'); // Encodes the text and allow to use special characters
-      // replace spaces with underscores
+  useEffect(() => {
+    const formatText = (string) => {
+      // Encode special characters in the string to be used safely in a URL + replace space(%20) to underscores _
+      return encodeURIComponent(string).replace(/%20/g, '_');
     };
 
     const formattedTopText = topText ? formatText(topText) : '_';
     const formattedBottomText = bottomText ? formatText(bottomText) : '_';
 
-    return `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Returns the updated url in the right structure
-  };
-
-  useEffect(() => {
-    const url = updateMemeUrl(template, topText, bottomText); // Updates the meme URL based on the user input
+    const url = `https://api.memegen.link/images/${template}/${formattedTopText}/${formattedBottomText}.jpg`; // Construct the URL
     setMemeUrl(url);
-  }, [template, topText, bottomText]); // Dependency array: whenever the variables change they trigger the useEffect
+  }, [template, topText, bottomText]); // Dependency array: useEffect will re-run whenever one of the variables changes
 
   const generateMeme = () => {
     // When the button is clicked, update the template state with the value of liveTemplate
@@ -32,8 +27,7 @@ export default function MemeGenerator() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent default form submission if within a form
+    if (event === 'Enter') {
       generateMeme(); // Call generateMeme when Enter is pressed
     }
   };
