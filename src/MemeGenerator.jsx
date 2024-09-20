@@ -2,7 +2,6 @@ import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 
 export default function MemeGenerator() {
-  const [liveTemplate, setLiveTemplate] = useState(''); // Stores what the user is currently typing for the meme template
   const [template, setTemplate] = useState('preview'); // Stores the confirmed template and loads a default preview image when the page first loads
   const [topText, setTopText] = useState(''); // Set top text
   const [bottomText, setBottomText] = useState(''); // Set bottom text
@@ -33,9 +32,9 @@ export default function MemeGenerator() {
           Meme template:
           <input
             className="template-name"
-            value={liveTemplate}
+            value={template}
             onChange={(event) => {
-              setLiveTemplate(event.currentTarget.value); // Update liveTemplate as user types
+              setTemplate(event.currentTarget.value); // Update liveTemplate as user types
               setTemplate(event.currentTarget.value); // Automatically generate meme without a button
             }}
             placeholder="e.g., 'doge'"
