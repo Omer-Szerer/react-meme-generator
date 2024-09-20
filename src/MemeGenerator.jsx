@@ -22,9 +22,8 @@ export default function MemeGenerator() {
     setMemeUrl(url); // Updating the meme URL state
   }, [template, topText, bottomText]); // useEffect re-runs when template, topText, or bottomText change
 
-  // Function to download the generated meme image
   const downloadImage = () => {
-    saveAs(memeUrl, 'image.jpg');
+    saveAs(memeUrl, `${template}-meme.jpg`);
   };
 
   return (
